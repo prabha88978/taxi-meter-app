@@ -2,19 +2,22 @@ package taxi.model;
 
 public class Customer {
     private static String mobileNumber;
-    private static int requestedDistance;
+    private int numberOfVisits;
 
-
-    public Customer(String mobileNumber, int requestedDistance) {
+    public Customer(String mobileNumber) {
         this.mobileNumber = mobileNumber;
-        this.requestedDistance = requestedDistance;
+        this.numberOfVisits = 0;
     }
 
     public String getMobileNumber() {
         return mobileNumber;
     }
 
-    public int getRequestedDistance() {
-        return requestedDistance;
+    public int getNumberOfVisits() {
+        return numberOfVisits;
+    }
+
+    public void setVisitCount() {
+        numberOfVisits++;
     }
 }
