@@ -1,5 +1,5 @@
 import controller.Calculator;
-import taxi.model.Customer;
+import taxi.model.*;
 
 import java.util.Scanner;
 
@@ -8,9 +8,15 @@ public class TaxiApp {
         Scanner scanner = new Scanner(System.in);
         int requestedDistance = scanner.nextInt();
         String mobileNumber = scanner.next();
-        Calculator calculator = new Calculator();
         Customer customer = new Customer(mobileNumber);
-        String costs = calculator.calculate(customer, requestedDistance);
+        AppUsers appUsers = new AppUsers();
+        Calculator calculator = new Calculator();
+        String costs = null;
+        try {
+            costs = calculator.calculate(appUsers, customer, requestedDistance);
+        } catch (InvalidAmountException e) {
+            e.printStackTrace();
+        }
         System.out.println(costs);
     }
 }

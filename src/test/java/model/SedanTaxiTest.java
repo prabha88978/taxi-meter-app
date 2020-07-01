@@ -1,13 +1,14 @@
 package model;
 
 import org.junit.Test;
+import taxi.model.InvalidAmountException;
 import taxi.model.SedanTaxi;
 
 import static org.junit.Assert.assertEquals;
 
 public class SedanTaxiTest {
     @Test
-    public void testShouldReturnTheAmount() {
+    public void testShouldReturnTheAmount() throws InvalidAmountException {
         SedanTaxi sedanTaxi = new SedanTaxi();
         int expectedAmount = 810;
 
@@ -17,7 +18,7 @@ public class SedanTaxiTest {
     }
 
     @Test
-    public void testShouldReturnTheAmountWhenTheDistanceIsMoreThanFlatDistance() {
+    public void testShouldReturnTheAmountWhenTheDistanceIsMoreThanFlatDistance() throws InvalidAmountException {
         SedanTaxi sedanTaxi = new SedanTaxi();
         int expectedAmount = 860;
 
@@ -27,7 +28,7 @@ public class SedanTaxiTest {
     }
 
     @Test
-    public void testShouldReturnTheAmountWithAdditionalCost() {
+    public void testShouldReturnTheAmountWithAdditionalCost() throws InvalidAmountException {
         SedanTaxi sedanTaxi = new SedanTaxi();
         int expectedAmount = 260;
 
