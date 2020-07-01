@@ -2,13 +2,13 @@ package taxi.model;
 
 import java.util.HashMap;
 
-public class AppUsers extends HashMap<String, Customer> {
+public class AppUsers {
     public HashMap<String, Customer> customers = new HashMap<>();
-    double FIRST_BOOKING_DISCOUNT_PERCENT = 0.25;
-    double ALTERNATE_BOOKING_DISCOUNT_PERCENT = 0.10;
+    final double FIRST_BOOKING_DISCOUNT_PERCENT = 0.25;
+    final double ALTERNATE_BOOKING_DISCOUNT_PERCENT = 0.10;
 
     public double calculateDiscountPercent(Customer customer) {
-        if (isVisitedBefore(customer)) {
+        if (hasVisitedBefore(customer)) {
             if (numberOfVisits(customer) % 2 == 0)
                 return ALTERNATE_BOOKING_DISCOUNT_PERCENT;
             else
@@ -18,7 +18,7 @@ public class AppUsers extends HashMap<String, Customer> {
         }
     }
 
-    private boolean isVisitedBefore(Customer customer) {
+    private boolean hasVisitedBefore(Customer customer) {
         return customers.containsKey(customer.getMobileNumber());
     }
 
@@ -27,10 +27,10 @@ public class AppUsers extends HashMap<String, Customer> {
     }
 
     public void saveCustomerDetails(Customer customer) {
-        if (isVisitedBefore(customer)) {
-            customers.get(customer.getMobileNumber()).setVisitCount();
+        if (hasVisitedBefore(customer)) {
+            customers.get(customer.getMobileNumber()).incrementVisitCount();
         } else {
-            customer.setVisitCount();
+            customer.incrementVisitCount();
             customers.put(customer.getMobileNumber(), customer);
         }
     }

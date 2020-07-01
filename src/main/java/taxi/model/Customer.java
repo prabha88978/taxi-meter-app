@@ -17,7 +17,7 @@ public class Customer {
         return numberOfVisits;
     }
 
-    public void setVisitCount() {
+    public void incrementVisitCount() {
         numberOfVisits++;
     }
 }

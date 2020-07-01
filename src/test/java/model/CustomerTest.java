@@ -29,7 +29,7 @@ public class CustomerTest {
     @Test
     public void testShouldReturnOneAsNumberOfVisitsOfAUserAtSecondVisit() {
         Customer customer = new Customer("8897888978");
-        customer.setVisitCount();
+        customer.incrementVisitCount();
         int expectedNumberOfVisits = 1;
 
         int actualNumberOfVisits = customer.getNumberOfVisits();
@@ -42,7 +42,7 @@ public class CustomerTest {
         Customer customer = new Customer("88978");
         int expectedSetCount = 1;
 
-        customer.setVisitCount();
+        customer.incrementVisitCount();
         int actualSetCount = customer.getNumberOfVisits();
 
         assertEquals(expectedSetCount, actualSetCount);

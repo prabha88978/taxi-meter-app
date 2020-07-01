@@ -1,13 +1,13 @@
 package taxi.model;
 
 public abstract class Taxi {
-    private static int baseDistance;
-    private static int basePrice;
-    private static int mediumDistance;
-    private static int mediumPricePerKM;
-    private static int additionalDistanceCostPerKM;
-    private static int flatDistance;
-    private static int flatDistancePerKilometer;
+    private final int baseDistance;
+    private final int basePrice;
+    private final int mediumDistance;
+    private final int mediumPricePerKM;
+    private final int additionalDistanceCostPerKM;
+    private int flatDistance;
+    private int flatDistancePerKilometer;
 
     Taxi(int baseDistance, int basePrice, int mediumDistance, int mediumPricePerKM, int additionalDistanceCostPerKM, int flatDistance, int flatDistancePerKilometer) {
         this.baseDistance = baseDistance;
@@ -27,25 +27,16 @@ public abstract class Taxi {
         this.additionalDistanceCostPerKM = additionalDistanceCostPerKM;
     }
 
-    public int getAmount(int requestedDistance) {
-        int totalAmount;
-        if (isMore(requestedDistance))
-            totalAmount = getFlatCost(requestedDistance);
-        else {
-            totalAmount = calculateTariff(requestedDistance);
-        }
-        return totalAmount;
-    }
-
-    private static boolean isMore(int requestedDistance) {
+    private boolean isMore(int requestedDistance) {
+        System.out.println("Flat distance : \n" + flatDistance);
         return requestedDistance > flatDistance;
     }
 
-    private static int getFlatCost(int requestedDistance) {
+    private int getFlatCost(int requestedDistance) {
         return requestedDistance * flatDistancePerKilometer;
     }
 
-    static int calculateTariff(int requestedDistance) {
+    int calculateTariff(int requestedDistance) {
         int amount = 0;
         amount += addBaseCost(requestedDistance);
         requestedDistance -= baseDistance;
@@ -55,15 +46,14 @@ public abstract class Taxi {
         return amount;
     }
 
-
-    private static int addExtraTravelCost(int requestedDistance) {
-        if (isaPositive(requestedDistance))
+    private int addExtraTravelCost(int requestedDistance) {
+        if (requestedDistance > 0)
             return requestedDistance * additionalDistanceCostPerKM;
         return 0;
     }
 
-    private static int addMediumBaseCost(int requestedDistance) {
-        if (isaPositive(requestedDistance)) {
+    private int addMediumBaseCost(int requestedDistance) {
+        if (requestedDistance > 0) {
             if (requestedDistance >= mediumDistance)
                 return mediumDistance * mediumPricePerKM;
             else
@@ -72,14 +62,22 @@ public abstract class Taxi {
         return 0;
     }
 
-    private static int addBaseCost(int requestedDistance) {
-        if (isaPositive(requestedDistance))
+    private int addBaseCost(int requestedDistance) {
+        if (requestedDistance > 0)
             return basePrice;
         return 0;
     }
 
-
-    private static boolean isaPositive(int requestedDistance) {
-        return requestedDistance > 0;
+    public int getAmount(int requestedDistance) throws InvalidAmountException {
+        int totalAmount;
+        if(requestedDistance < 0){
+            throw new InvalidAmountException();
+        }
+        if (isMore(requestedDistance))
+            totalAmount = getFlatCost(requestedDistance);
+        else {
+            totalAmount = calculateTariff(requestedDistance);
+        }
+        return totalAmount;
     }
 }
